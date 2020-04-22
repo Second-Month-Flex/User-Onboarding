@@ -5,25 +5,29 @@ import axios from "axios";
 import * as yup from "yup";
 
 const initialForm = {
-  name: "",
+  first_name: "",
   email: "",
   password: "",
   terms: "",
 };
 const initialFormErrors = {
-  name: "",
+  first_name: "",
   email: "",
   password: "",
   terms: "",
 };
 
 const formSchema = yup.object().shape({
-  name: yup.string().required("Must have a Name"),
+  first_name: yup.string().required("Must have a Name"),
   email: yup
     .string()
     .email("Must be a valid email")
     .required("Email is required"),
   password: yup.string().required("Must have a password"),
+  terms: yup
+    .boolean()
+    .oneOf([true, "Must accept terms"])
+    .required("Must agree to terms"),
 });
 
 function App() {
@@ -95,7 +99,7 @@ function App() {
     event.preventDefault();
 
     const newMember = {
-      name: form.name,
+      first_name: form.first_name,
       email: form.email,
       password: form.password,
       terms: form.terms,

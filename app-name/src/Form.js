@@ -16,12 +16,12 @@ function Form(props) {
       <label>
         <input
           onChange={onInputChange}
-          name="name"
+          name="first_name"
           type="text"
           placeholder="Name"
-          value={values.name}
+          value={values.first_name}
         />
-        {errors.name}
+        {errors.first_name}
       </label>
       <label>
         <input
@@ -51,7 +51,9 @@ function Form(props) {
           value={values.terms}
         />
         Terms of Service
+        {errors.terms}
       </label>
+
       <label>
         <button onClick={onSubmit} disabled={disabled}>
           {" "}
@@ -63,7 +65,7 @@ function Form(props) {
         {members.map((item) => {
           return (
             <div>
-              <h1>{item.name} </h1>
+              <h2>{item.first_name} </h2>
               <h3>{item.email}</h3>
               <h3>{item.password}</h3>
             </div>
