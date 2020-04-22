@@ -9,6 +9,7 @@ function Form(props) {
     ////////// NEW PROPS FOR TODAY //////////
     disabled,
     errors,
+    members,
   } = props;
   return (
     <form>
@@ -44,7 +45,7 @@ function Form(props) {
       </label>
       <label>
         <input
-          onChange={onInputChange}
+          onChange={onCheckboxChange}
           name="terms"
           type="checkbox"
           value={values.terms}
@@ -52,8 +53,23 @@ function Form(props) {
         Terms of Service
       </label>
       <label>
-        <button> Submit me </button>
+        <button onClick={onSubmit} disabled={disabled}>
+          {" "}
+          Submit me{" "}
+        </button>
       </label>
+      <p>
+        {" "}
+        {members.map((item) => {
+          return (
+            <div>
+              <h1>{item.name} </h1>
+              <h3>{item.email}</h3>
+              <h3>{item.password}</h3>
+            </div>
+          );
+        })}
+      </p>
     </form>
   );
 }

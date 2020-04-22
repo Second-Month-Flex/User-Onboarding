@@ -61,9 +61,69 @@ function App() {
     });
   };
 
+  const url = "https://reqres.in/api/users";
+
+  const getMembers = () => {
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data.data);
+        setMembers(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getMembers();
+  }, []);
+
+  const postMember = (member) => {
+    axios.post(url, member).then((res) => {
+      setMembers([...members, res.data]);
+    });
+  };
+
+  useEffect(() => {
+    formSchema.isValid(form).then((valid) => {
+      setFormDisabled(!valid);
+    });
+  }, [form]);
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    const newMember = {
+      name: form.name,
+      email: form.email,
+      password: form.password,
+      terms: form.terms,
+    };
+    postMember(newMember);
+    setForm(initialForm);
+  };
+
+  const checkbox = (evt) => {
+    const { name } = evt.target;
+    const isChecked = evt.target.checked;
+
+    setForm({
+      ...form,
+      [name]: isChecked,
+    });
+  };
   return (
     <div className="App">
-      <Form values={form} onInputChange={Changing} errors={errors} />
+      <Form
+        onCheckboxChange={checkbox}
+        values={form}
+        onInputChange={Changing}
+        errors={errors}
+        onSubmit={onSubmit}
+        disabled={formDisabled}
+        members={members}
+      />
     </div>
   );
 }
